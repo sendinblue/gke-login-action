@@ -1,0 +1,32 @@
+name: Test action
+on:
+  push:
+jobs:
+  should-login-to-gke:
+    name: Should login to GKE
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: 'dimw/mockbin-action@main'
+        with:
+          commands: gcloud
+
+      - name: Act
+        uses: './'
+        with:
+          gcp-project-id: foo-gcp-project-id
+          gcp-service-account-key: |
+            {
+              "client_email": "foo@example.com"
+            }
+          gke-cluster: foo-gke-cluster
+          gke-zone: foo-gke-zone
+
+      - uses: 'dimw/mockbin-action@main'
+        with:
+          commands: gcloud
+          assert-args: |
+            ["--quiet", "config", "set", "project", "foo-gcp-project-id"]
+            ["--quiet", "auth", "activate-service-account", "foo@example.com", "--project=foo-gcp-project-id", "--key-file", "-"]
+            ["container", "clusters", "get-credentials", "foo-gke-cluster", "--zone", "foo-gke-zone"]
