@@ -56,6 +56,6 @@ jobs:
         with:
           commands: gcloud
           assert-args: |
-            ["--quiet", "config", "set", "project", "foo-gcp-project-id"]
-            ["--quiet", "auth", "activate-service-account", "foo@example.com", "--project=foo-gcp-project-id", "--key-file", "-"]
-            ["container", "clusters", "get-credentials", "foo-gke-cluster", "--zone", "foo-gke-zone"]
+            ["--quiet", "config", "set", "project", "foo\\-gcp\\-project\\\-id"]
+            ["--quiet", "auth", "activate\\-service\\-account", "foo@example.com", "--project=foo\\-gcp\\-project\\-id", "--key\\-file", "-"]
+            ["container", "clusters", "get\\-credentials", "foo\\-gke\\-cluster", "--zone", "foo\\-gke\\-zone"]
