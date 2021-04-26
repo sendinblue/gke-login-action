@@ -6,21 +6,21 @@ on the _ubuntu-latest_ GitHub Runners.
 
 ## Inputs
 
-### `gcp-project-id`
-
-GCP project ID
-
 ### `gcp-service-account-key`
 
-GCP service account key.
+**Required** GCP service account key.
 
 ### `gke-cluster`
 
-Cluster ID in GKE.
+**Required** Cluster ID in GKE.
 
 ### `gke-zone`
 
 Zone to use in GKE. Default: `europe-west3-b`.
+
+### `gcp-project-id`
+
+GCP project ID. Default: extracted from `gcp-service-account-key`.
 
 ## Outputs
 
@@ -30,9 +30,8 @@ None.
 
 ```yaml
 - name: Configure GKE
-  uses: 'sendinblue/gke-login-action@main'
+  uses: 'sendinblue/gke-login-action@v1'
   with:
-    gcp-project-id: ${{ env.GCP_PROJECT_ID }}
     gcp-service-account-key: ${{ env.GCP_SERVICE_ACCOUNT_KEY }}
     gke-cluster: ${{ env.GKE_CLUSTER }}
     gke-zone: ${{ env.GKE_ZONE }}

@@ -30,3 +30,32 @@ jobs:
             ["--quiet", "config", "set", "project", "foo-gcp-project-id"]
             ["--quiet", "auth", "activate-service-account", "foo@example.com", "--project=foo-gcp-project-id", "--key-file", "-"]
             ["container", "clusters", "get-credentials", "foo-gke-cluster", "--zone", "foo-gke-zone"]
+
+  should-extract-gcp-project-id-from-sa-key:
+    name: Should extract gcp-project-id from service account key
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: 'dimw/mockbin-action@main'
+        with:
+          commands: gcloud
+
+      - name: Act
+        uses: './'
+        with:
+          gcp-service-account-key: |
+            {
+              "client_email": "foo@example.com",
+              "project_id": "gcp-project-id"
+            }
+          gke-cluster: foo-gke-cluster
+          gke-zone: foo-gke-zone
+
+      - uses: 'dimw/mockbin-action@main'
+        with:
+          commands: gcloud
+          assert-args: |
+            ["--quiet", "config", "set", "project", "foo-gcp-project-id"]
+            ["--quiet", "auth", "activate-service-account", "foo@example.com", "--project=foo-gcp-project-id", "--key-file", "-"]
+            ["container", "clusters", "get-credentials", "foo-gke-cluster", "--zone", "foo-gke-zone"]
