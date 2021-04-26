@@ -47,7 +47,7 @@ jobs:
           gcp-service-account-key: |
             {
               "client_email": "foo@example.com",
-              "project_id": "gcp-project-id"
+              "project_id": "foo-gcp-project-id"
             }
           gke-cluster: foo-gke-cluster
           gke-zone: foo-gke-zone
