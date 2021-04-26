@@ -47,7 +47,7 @@ jobs:
           gcp-service-account-key: |
             {
               "client_email": "foo@example.com",
-              "project_id": "gcp-project-id"
+              "project_id": "foo-gcp-project-id"
             }
           gke-cluster: foo-gke-cluster
           gke-zone: foo-gke-zone
@@ -56,6 +56,6 @@ jobs:
         with:
           commands: gcloud
           assert-args: |
-            ["--quiet", "config", "set", "project", "foo\\-gcp\\-project\\-id"]
-            ["--quiet", "auth", "activate\\-service\\-account", "foo@example.com", "--project=foo\\-gcp\\-project\\-id", "--key\\-file", "-"]
-            ["container", "clusters", "get\\-credentials", "foo\\-gke\\-cluster", "--zone", "foo\\-gke\\-zone"]
+            ["--quiet", "config", "set", "project", "foo-gcp-project-id"]
+            ["--quiet", "auth", "activate-service-account", "foo@example.com", "--project=foo-gcp-project-id", "--key-file", "-"]
+            ["container", "clusters", "get-credentials", "foo-gke-cluster", "--zone", "foo-gke-zone"]
